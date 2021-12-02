@@ -1,6 +1,6 @@
 # Advent of Code 2021
 
-[adventofcode.com](adventofcode.com/2021)
+[adventofcode.com](https://adventofcode.com/2021)
 
 ### message from page source 
     
