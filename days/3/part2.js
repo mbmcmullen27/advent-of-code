@@ -14,30 +14,26 @@ function partOne() {
         gamma[i] = mostCommon(data, i); 
     })
     
-    var epsilon = gamma.map((d)=>1 -d).join('')
+    var epsilon = gamma.map((d) => 1 - d).join('')
     gamma = gamma.join('')
 
     console.log(parseInt(gamma,2) * parseInt(epsilon,2))
 }
 
 function partTwo() {
-    var common;
-    
-    var co2 = data;
-    for ( var i = 0; co2.length > 1 && i < 12; i++) {
-        common = mostCommon(co2, i)
-        co2 = co2.filter((e)=> e[i] != common)
+    var co2 = data, 
+        oxygen = data,
+        len = (arr)=>arr.length > 1;
+
+    for ( var i = 0; len(co2) && len(oxygen) && i < 12; i++) {
+        if (len(co2)) co2 = co2.filter((e) => e[i] != mostCommon(co2, i))
+        if (len(oxygen)) oxygen = oxygen.filter((e) => e[i] == mostCommon(oxygen, i))
     }
-    co2 = co2[0]
     
-    var oxygen = data;
-    for ( var i = 0; oxygen.length > 1 && i < 12; i++) {
-        common = mostCommon(oxygen, i) 
-        oxygen = oxygen.filter((e)=> e[i] == common)
-    }
-    oxygen = oxygen[0]
-    
-    console.log(parseInt(oxygen,2) * parseInt(co2,2))
+    co2 = parseInt(co2[0], 2)
+    oxygen = parseInt(oxygen[0], 2)
+
+    console.log(co2 * oxygen)
 }
 
 partOne();
