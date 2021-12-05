@@ -21,15 +21,11 @@ console.log(lines.length)
 var board = Array.from(Array(1000), ()=>Array(1000).fill(0));
 
 lines.map((line, k)=>{
-    // let xleg = line.start[0] - line.end[0]
-    // let yleg = line.start[1] - line.end[1]
-    // let length = Math.sqrt(xleg**2 + yleg**2)
     var length;
     if (line.start[0] == line.end[0])
         length = line.end[1] - line.start[1]
     else    
         length = line.end[0] - line.start[0]
-    
     
     for(let i = 0; i != length; i < length ? i++ : i--) {
         if (line.start[0] == line.end[0]){
