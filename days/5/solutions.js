@@ -20,7 +20,6 @@ function partOne() {
     })
     
     board = Array.from(Array(1000), ()=>Array(1000).fill(0));
-
     console.log(drawLines(lines))
 }
 
