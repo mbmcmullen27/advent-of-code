@@ -11,7 +11,8 @@ const data = require('fs')
         }
     })
 
-var board;
+var board,
+    newBoard = _ => Array.from(Array(1000), ()=>Array(1000).fill(0));;
 
 function partOne() {
     let lines = data.filter((x)=>{
@@ -19,12 +20,12 @@ function partOne() {
         x.start[1] == x.end[1] 
     })
     
-    board = Array.from(Array(1000), ()=>Array(1000).fill(0));
+    board = newBoard()
     console.log(drawLines(lines))
 }
 
 function partTwo() {
-    board = Array.from(Array(1000), ()=>Array(1000).fill(0));
+    board = newBoard(); 
     console.log(drawLines(data))
 }
 
