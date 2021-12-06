@@ -14,10 +14,6 @@ class Laternfish
             false
         end
     end
-
-    def days
-        @days
-    end
 end
 
 school = []
@@ -29,15 +25,12 @@ for i in 0...input.size do
     school[i] = Laternfish.new(Integer(input[i]))
 end
 
-256.times do 
-    # puts "day:"
+80.times do 
     for fish in school do
         if fish.advance?() then
             school << Laternfish.new(9)
         end
-        # print "#{fish.days},"
     end
-    # puts "\n\n"
 end
 
 puts $no_fish
