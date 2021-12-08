@@ -28,7 +28,7 @@ function partTwo() {
     let result = data.map(display=>{
         let five = [], six = [], 
             patterns = display.patterns,
-            equal = (a,b) => segmentsInCommon(a,b)==a.length && segmentsInCommon(a,b)==b.length;
+            equal = (a,b) => segmentsInCommon(a,b)==a.length && a.length==b.length;
 
         display.signals.map(e=>{
             switch (e.length) {
