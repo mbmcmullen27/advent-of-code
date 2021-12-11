@@ -31,13 +31,11 @@ function partTwo(data) {
     for (let k = 0; ;k++) {
         let zeros = 0
         data.map((line,i)=>line.map((_,j)=>chain(data,i,j)))
-        data = data.map((line,i)=>line.map((e,j)=>{
-            if (e > 9){
+        data.map((line,i)=>line.map((_,j)=>{
+            if (data[i][j] > 9){
+                data[i][j] = 0
                 zeros++
-                return 0
-            } else{
-               return e 
-            } 
+            }
         }))
         if(zeros == 100) return k+1;
     }
