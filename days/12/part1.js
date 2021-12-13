@@ -22,9 +22,8 @@ function search(graph){
         if(value == 'end'){
             total++
         } else {
-            if(isLower(value)){
-                visits[value] = true
-            }    
+            if(isLower(value)) visits[value] = true
+            
             graph[value].forEach(node => {
                 if(!visits[node]) {
                     queue.push({value:node, visits: copy(visits)})

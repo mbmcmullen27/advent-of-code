@@ -12,29 +12,37 @@ function add(node,edge){
     graph[node].push(edge)
 }
 
-function search(graph){
+function convert(graph){
+    let keys = Object.keys(graph)
+    let newGraph = []
+    newGraph = keys.map(key=>graph[key].map(e=>keys.indexOf(e)))
+    return {graph: newGraph, keys: keys}
+}
+
+function search(input){
     let init = [] 
-    Object.keys(graph).forEach(x=>{
-        if(x=='start') init[x]=2
-        else if(x=='end') init[x]=1
-        else init[x]=0
+    let {graph, keys} = convert(input)
+    keys.forEach((x,i)=>{
+        if(x=='start') init[i]=2
+        else if(x=='end') init[i]=1
+        else init[i]=0
     })
-    let queue = [{value:'start',visits:init}]
+    let queue = [{value:keys.indexOf('start'),visits:[...init]}]
     // console.log(queue[0].visits)
     let total = 0
 
     while(queue.length!=0) {
-        let {value,visits} = queue.shift()
-        if(value == 'end'){
+        let {value,visits} = queue.pop()
+        if(keys[value] == 'end'){
             total++
+            // visits = [...init]
         } else {
             // console.log(visits)
-            if(isLower(value)){
-                visits[value]++
-            }    
+            if(isLower(keys[value])) visits[value]++
+            
             graph[value].forEach(node => {
                 if(visits[node]<2) {
-                    queue.push({value:node, visits: copy(visits)})
+                    queue.push({value:node, visits: [...visits]})
                 }
             })
         }
@@ -55,6 +63,7 @@ data.map(e=>{
     add(e[1],e[0])
 })
 
-console.log(graph)
+// console.log(graph)
 
 console.log(search(graph))
+// convert(graph)
