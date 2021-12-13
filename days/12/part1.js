@@ -42,11 +42,14 @@ function copy(arr){
     return newArray
 }
 
-data.map(e=>{
-    add(e[0],e[1])
-    add(e[1],e[0])
-})
+function partOne(){
+    data.map(e=>{
+        add(e[0],e[1])
+        add(e[1],e[0])
+    })
 
-console.log(graph)
+    return search(graph)
+}   
 
-console.log(search(graph))
+console.log(partOne())
+

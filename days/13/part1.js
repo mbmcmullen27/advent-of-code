@@ -15,9 +15,6 @@ var grid = Array.from(Array(width+1),()=>Array(height+1).fill(0))
 
 points.map(p=>grid[p[0]][p[1]]=1)
 
-// console.log(points)
-// console.log(grid)
-
 const first = data[1].split(/\n/)[0].match(/.=\d*/)[0]
 
 console.log(first)

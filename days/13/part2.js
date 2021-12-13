@@ -26,16 +26,24 @@ function verticalFold(fold){
     grid.slice(fold).map((e,i)=>{
         grid[fold-i] = e.map((f,j)=> f | grid[fold-i][j])
     })
+    grid = grid.slice(0,fold)
 }
 
 function horizontalFold(fold){
     grid.map((e,i)=>e.slice(fold).map((f,j)=>{
         grid[i][fold-j] = f | grid[i][fold-j]
     }))
+    grid = grid.map((e)=>e.slice(0,fold))
 }
 
 let fold = parseInt(folds[0].match(/(?<==)\d*/)[0])
-verticalFold(fold)
-let res = grid.slice(0,fold).flat().filter(p=>p==1)
+// verticalFold(fold)
+// let res = grid.slice(0,fold).flat().filter(p=>p==1)
+folds.map(fold=> {
+    let dir = fold.match(/.(?==)/)[0],
+        pos = fold.match(/(?<==)\d*/)[0]
 
-console.log(res.length)
+    if (dir == 'x') verticalFold(pos)
+    else if (dir == 'y') horizontalFold(pos)
+})
+console.log(grid.map(x=>x.map(y=>y==1? '#': ' ').join('')))
