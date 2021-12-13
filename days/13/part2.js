@@ -18,14 +18,14 @@ points.map(p=>grid[p[0]][p[1]]=1)
 // console.log(points)
 // console.log(grid)
 
-const first = data[1].split(/\n/)[0].match(/.=\d*/)[0]
+const folds = data[1].map(line=>split(/\n/)[0].match(/.=\d*/)[0])
 
-console.log(first)
-let fold = parseInt(first.match(/(?<==)\d*/))
-grid.slice(fold).map((e,i)=>{
-    grid[fold-i] = e.map((f,j)=> f | grid[fold-i][j])
-})
+console.log(folds)
+// let fold = parseInt(first.match(/(?<==)\d*/))
+// grid.slice(fold).map((e,i)=>{
+//     grid[fold-i] = e.map((f,j)=> f | grid[fold-i][j])
+// })
 
-let res = grid.slice(0,fold).flat().filter(p=>p==1)
+// let res = grid.slice(0,fold).flat().filter(p=>p==1)
 
-console.log(res.length)
+// console.log(res.length)
