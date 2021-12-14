@@ -10,28 +10,23 @@ data[1].split(/\n/).map(a=>{
     rules[tokens[0]] = tokens[0][0].concat(tokens[1])
 })
 
-function insertion([head, neck, ...tail]) {
-    if (tail.length == 0) return rules[head+neck]
-    return rules[head+neck]+insertion([neck].concat(tail))
+function insertion([fst, snd, ...tail]) {
+    if (tail.length == 0) return rules[fst+snd]
+    return rules[fst+snd]+insertion([snd].concat(tail))
 }
 
 function common(list, func) {
     let count = []
-    let chars = Array.from(list)
-    chars.map(c=>count[c] = (count[c]??0) + 1)
-    let res = Object.keys(count)[(func(...Object.values(count)))]
-    console.log(count)
-    console.log(count.filter(x=>x==func(...Object.values(count))))
-    // console.log(count.findIndex())
-    return res
+    Array.from(list).map(c=>count[c] = (count[c]??0) + 1)
+    return func(...Object.values(count))
 }
-
 
 console.log(rules)
 let res = insert(polymer);
-[...Array(2)].map(_=>{
+console.log(polymer);
+[...Array(5)].map(_=>{
+    console.log(res)
     res=insert(res)
 })
 
-console.log(res)
-console.log(common(res, Math.max))
+console.log(common(res,Math.max) - common(res, Math.min))
