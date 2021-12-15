@@ -22,10 +22,13 @@ function common(list, func) {
 }
 
 console.log(rules)
-let res = insert(polymer);
+console.log(insert(insert(insert(Object.keys(rules)[0]))))
+
+console.log(insert(insert('KF')))
+let res = polymer;
 console.log(polymer);
-[...Array(5)].map(_=>{
-    console.log(res)
+[...Array(4)].map(_=>{
+    // console.log(res)
     res=insert(res)
 })
 
