@@ -4,6 +4,7 @@ const data = require('fs')
     .map(d=>("000"+parseInt(d,16).toString(2)).slice(-4))
     .join('')
 
+
 Object.prototype.parse = function(i,n) {return parseInt(this.substr(i,n),2)} 
 
 function packet(data) {
@@ -66,6 +67,39 @@ function versionSum(p) {
     else return p.version + p.payload.subpackets.reduce((a,b)=>a+versionSum(b),0)
 }
 
+function evaluate(p){
+    let sub;
+    switch (p.type) {
+        case 0:
+            return p.payload.subpackets.reduce((a,b)=>{
+                return a+evaluate(b)
+            },0)
+        case 1:
+            return p.payload.subpackets.reduce((a,b)=>{
+                return a*evaluate(b)
+            },1)
+        case 2:
+            return Math.min(...p.payload.subpackets.map(a=>evaluate(a)))
+        case 3:
+            return Math.max(...p.payload.subpackets.map(a=>evaluate(a)))
+        case 4:
+            return p.payload.value
+        case 5:
+            sub = p.payload.subpackets
+            return evaluate(sub[0]) > evaluate(sub[1]) ? 1 : 0 
+        case 6:
+            sub = p.payload.subpackets
+            return evaluate(sub[0]) < evaluate(sub[1]) ? 1 : 0 
+        case 7:
+            sub = p.payload.subpackets
+            return evaluate(sub[0]) == evaluate(sub[1]) ? 1 : 0 
+    }
+
+}
+
 let p = packet(data)
-console.log(versionSum(p))
+// let p = packet('110100101111111000101000')
+console.log(p)
+// console.log(p.payload.subpackets)
+console.log(evaluate(p))
 
