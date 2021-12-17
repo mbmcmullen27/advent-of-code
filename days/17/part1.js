@@ -10,31 +10,31 @@ const input = require('fs').readFileSync('input', 'utf8'),
 console.log(target)
 
 function launch(velocity) {
-    let pos = [0,0],res,x,y
+    let pos = [0,0], peak
     while(!test(pos)) {
         // console.log(pos)
         // console.log(velocity)
         let [x,y] = pos
+        if(velocity[1] == 0) peak = y
         // console.log(`${x} ${y}`)
-        if ( x > target.x[1]) return false
+        if ( x > target.x[1]) return {hit: false}
         if (velocity[0] == 0 && x < target.x[0]){
-            console.log(`missed @ ${pos} -> ${velocity}`)
-            return false
+            // console.log(`missed @ ${pos} -> ${velocity}`)
+            return {hit: false}
         } 
         if (velocity[1] < 0 && (y < target.y[0])){
-            console.log(`missed @ ${pos} -> ${velocity}`)
-            return false
+            // console.log(`missed @ ${pos} -> ${velocity}`)
+            return {hit: false}
         } 
         let res = step(pos, velocity)
         pos = res.pos
         velocity = res.velocity
     }
-    console.log(`landed @ ${pos} -> ${velocity}`)
-    return true
+    // console.log(`landed @ ${pos} -> ${velocity}`)
+    return {hit: true, peak: peak}
 }
 
 function step([x, y], [xv, yv]) {
-    let next = drag(xv)
     let res = {
         pos: [x+xv, y+yv],
         velocity: [drag(xv), --yv] 
@@ -54,25 +54,22 @@ function test([x,y]) {
             && y <= target.y[1] && y >= target.y[0]
 }
 
-
 function partOne(){
     let velocity = [1,0]
-    // launch([11,30])
     console.log(target)
-    while(!launch(velocity)){
-        velocity[0]++
-        console.log(velocity)
-    } 
-    console.log(`${velocity} -> ${launch(velocity)}`)
-    while(launch(velocity)) {
-        velocity[1]++
-        console.log(velocity)
-    }
-    console.log(`${velocity} -> ${launch(velocity)}`)
 
-    console.log(launch([9,30]))
+    let arr = Array(0);
+
+    for(let j = 0; j <= target.x[1]; j++) {
+        velocity = [j,0]
+        arr = arr.concat([...Array(500)].map((_)=> {
+            velocity[1]++
+            let res = launch(velocity)
+            return {hit:res.hit,v:velocity.slice(), peak:res.peak}
+        }).filter(x=>x.hit == true))
+    }
     
-    // console.log(`${velocity} -> ${launch(velocity)}`)
+    console.log(arr)
 }
 
 partOne()
