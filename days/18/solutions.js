@@ -5,11 +5,13 @@ const data = require('fs')
     add = (a,b)=>[a].concat([b])
 
 function reduce(tree) {
-    arr = toArray(tree)
+    let equals = (a,b) => JSON.stringify(a) == JSON.stringify(toArray(b)), 
+        arr = toArray(tree)
+
     explode(tree)
-    if (JSON.stringify(arr) ==  JSON.stringify(toArray(tree))){
+    if (equals(arr, tree)){
         split(tree)
-        if (JSON.stringify(arr) ==  JSON.stringify(toArray(tree)))
+        if (equals(arr, tree))
             return
     }
 
@@ -17,7 +19,6 @@ function reduce(tree) {
 }
 
 function build(tree, depth) {
-    if (tree === undefined) return
     if (typeof(tree) === 'number') {
         return { value: tree,
                 depth: depth}
@@ -31,7 +32,6 @@ function build(tree, depth) {
 function stack(tree) {
     let stack = Array(0)
     function fillStack(tree){
-        if(tree === undefined)return
         if(tree.value !== undefined) {
             stack.push(tree)
         } else if (tree !== undefined){
@@ -44,13 +44,19 @@ function stack(tree) {
 }
 
 function split(tree) {
-    let list = stack(tree,0)
+    let list = stack(tree,0),
+        splitValue = (x,f) => {
+            return {
+                value: f(x.value/2.0),
+                depth: x.depth+1
+            }
+        }
     
     while(list.length>0){
         let e = list.shift()
         if (e.value>=10) {
-            e.left = {value: Math.floor(e.value/2.0), depth: e.depth+1},
-            e.right =  {value: Math.ceil(e.value/2.0), depth: e.depth+1},
+            e.left = splitValue(e, Math.floor)
+            e.right = splitValue(e, Math.ceil) 
             delete e.value
             break;
         }
@@ -105,7 +111,6 @@ function addright(v, right){
 }
 
 function toArray(tree) {
-    if(tree === undefined) return
     if(tree.value !== undefined) return tree.value
     return [toArray(tree.left),toArray(tree.right)]
 }
