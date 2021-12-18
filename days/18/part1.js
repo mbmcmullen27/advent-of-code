@@ -114,7 +114,7 @@ function toArray(tree) {
 
 function sum(tree) {
     if(typeof(tree) === 'number') return tree
-    return sum(tree[0]) + sum(tree[1])
+    return (3*sum(tree[0])) + (2*sum(tree[1]))
 }
 
 tree=enqueue(add([[[[4,3],4],4],[7,[[8,4],9]]],[1,1]),0)
