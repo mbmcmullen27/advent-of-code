@@ -5,14 +5,28 @@ const data = require('fs')
     grid = data[1].split(/\n/).map(x=>Array.from(x).map(c=>c=='#'?1:0))    
 
 
-let padded = grid.map(l=> [0].concat(l.concat(0)))
-console.log(padded.map(x=>"("+x[0]+", "+x[x.length-1]+")"))
+    
+function enhance(image) {
+    let padded = image.map(l=> [0,0,0].concat(l.concat([0,0,0])))
+    
+    padded.unshift(Array(padded[0].length).fill(0))
+    padded.unshift(Array(padded[0].length).fill(0))
+    padded.unshift(Array(padded[0].length).fill(0))
+    padded.push(Array(padded[0].length).fill(0))
+    padded.push(Array(padded[0].length).fill(0))
+    padded.push(Array(padded[0].length).fill(0))
 
-// padded = Array(padded[0].length).fill(0).concat(padded)
-console.log(padded.length)
+    return padded.slice(1,padded.length-1).map((line,i)=>{
+        return line.map((_,j)=>{
+            return lookup[parseInt(padded[i].slice(j,j+3)
+            .concat(padded[i+1].slice(j,j+3))
+            .concat(padded[i+2].slice(j,j+3)),2)]
+        })
+    })
+}
 
-padded.unshift(Array(padded[0].length).fill(0))
-padded.push(Array(padded[0].length).fill(0))
-
-console.log(padded.length)
-
+let res = enhance(grid).map(x=>x.map(c=>c=='#'?1:0))
+// console.log(grid)
+console.log(enhance(res).flat().filter(x=>x=='#').length)
+// res = res.map(l=>console.log(l.join('')))
+// console.log(res)
