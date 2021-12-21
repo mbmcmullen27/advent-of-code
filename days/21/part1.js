@@ -6,7 +6,13 @@ const data = require('fs')
 
 console.log(data)
 
-var total = 0
+var players = data.map(x=>move(x)),
+    scores = players.map(_=>0),
+    total = 0,
+    dice = roll(),
+    step = () => [...Array(3)].reduce((a,_)=>a+dice.next().value,0)
+
+players.map(x=>x.next())
 
 function* roll() {
     var i = 0
@@ -23,19 +29,27 @@ function* move(start) {
     var spaces = yield pos
     while(true) {
         pos += spaces
-        console.log(`spaces ${spaces}`)
-        if (pos > 10) pos -=10        
+        while (pos > 10) pos -=10        
         spaces = yield pos
     }
-        
 }
 
-var dice = roll(),
-    step = () => [...Array(3)].reduce((a,_)=>a+dice.next().value,0)
+function play(){
+    console.log(players)
+    console.log(scores)
+    
+    loop:
+    while(true) {
+        for(i in players) {
+            let steps = step(), val = players[i].next(steps).value
+            scores[i] += val
+            console.log(`${steps} spaces for player ${i}, position = ${val}`)
+            if(scores[i] > 1000) break loop
+        }
+    }
 
-// console.log(step())
-// console.log(total)
+    return scores.filter(x=>x<1000)[0] * total
 
-var board = move(1)
-board.next()
-console.log(board.next(step()).value)
+}
+
+console.log(play())
