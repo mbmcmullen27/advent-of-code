@@ -7,13 +7,10 @@ const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 let sum = 0;
 jump: for(let i = 0; i<data.length; i+=3) {
-  let first = data[i]
-  let second = data[i+1]
-  let third = data[i+2]
-  for(achar of first) {
-    for(bchar of second) {
+  for(achar of data[i]) {
+    for(bchar of data[i+1]) {
       if(achar === bchar) {
-        for (cchar of third){
+        for (cchar of data[i+2]){
           if(achar === cchar){
             if (achar == achar.toLowerCase()) {
               sum += lower.indexOf(achar) + 1
