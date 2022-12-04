@@ -4,8 +4,6 @@ const data = fs
     .split(/\n/)
     .map(line=>line.split(/[-,]/).map(i=>parseInt(i)))
 	    	
-console.log(data)
-
 let sum = 0
 data.forEach(pair=>{
     if (pair[0] >= pair[2] && pair[1] <= pair[3]) sum++
@@ -13,5 +11,3 @@ data.forEach(pair=>{
 })
 
 console.log(sum)
-// 209 too low
-// 512 too high
