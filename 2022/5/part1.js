@@ -6,7 +6,6 @@ const data = fs
 let startingStacks = data[0].split(/\n/)
 let stacks = Array.from(Array(9), () =>[])
 let instructions = data[1].split(/\n/)
-console.log(startingStacks)
 
 for(let i = 0; i< startingStacks.length-1;i++){
   let line = Array.from(startingStacks[i])
@@ -17,8 +16,6 @@ for(let i = 0; i< startingStacks.length-1;i++){
     n++
   }
 }
-
-// console.log(stacks)
 
 instructions.forEach(instruction => {
   let n = parseInt(instruction.match(/(?<=move )\d*/))
@@ -31,7 +28,6 @@ function move(n, from, to) {
   [...Array(n)].map( _ =>{
     stacks[to].unshift(stacks[from].shift())
   });
-
 }
 
 stacks.forEach(s => process.stdout.write(s[0]))
