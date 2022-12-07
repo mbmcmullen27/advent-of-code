@@ -12,6 +12,23 @@ class dir {
     this.size = 0
   }
 
+  static calculate(tree) {
+    if (tree.size <= 100000) sum += tree.size 
+    tree.dirs.forEach(node=>dir.calculate(node))
+  }
+
+  static find(tree) {
+    if (tree.size > required) candidates.push(tree)
+    tree.dirs.forEach(node=>dir.find(node))
+  }
+
+  static getSize(tree) {
+    tree.size = tree.files.reduce((total, e)=>total + e.size, 0)
+    if (tree.dirs.length == 0) return tree.size
+    tree.dirs.forEach(e=>tree.size += dir.getSize(e))
+    return tree.size
+  }
+
   addDir(dir) {
     this.dirs.push(dir)
   }
@@ -24,10 +41,23 @@ class dir {
   }
 }
 
+function part1(){
+  dir.calculate(root)
+  console.log(`sizes total: ${sum}`)
+}
+
+function part2(){
+  available = 70000000 - root.size
+  required = 30000000 - available
+  console.log(`needs: ${required}`)
+  dir.find(root)
+  console.log(`best candidate: ${candidates.sort((a,b)=>a.size-b.size)[0].size}`)
+}
+
+var sum = 0;
 let root = new dir("/", null),
     currentDir = root, 
     candidates = [],
-    sum = 0, 
     available, 
     required 
 
@@ -63,34 +93,4 @@ data.slice(1).forEach(ins => {
   }
 })
 
-function calculate(tree) {
-  if (tree.size <= 100000) sum += tree.size 
-  tree.dirs.forEach(node=>calculate(node))
-}
-
-function find(tree) {
-  if (tree.size > required) candidates.push(tree)
-  tree.dirs.forEach(node=>find(node))
-}
-
-function size(tree) {
-  tree.size = tree.files.reduce((total, e)=>total + e.size, 0)
-  if (tree.dirs.length == 0) return tree.size
-  tree.dirs.forEach(e=>tree.size += size(e))
-  return tree.size
-}
-
-function part1(){
-  calculate(root)
-  console.log(`sizes total: ${sum}`)
-}
-
-function part2(){
-  available = 70000000 - root.size
-  required = 30000000 - available
-  console.log(`needs: ${required}`)
-  find(root)
-  console.log(`candidate: ${candidates.sort((a,b)=>a.size-b.size)[0].size}`)
-}
-
-size(root), part1(), part2()
+dir.getSize(root), part1(), part2()
