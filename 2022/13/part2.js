@@ -1,11 +1,14 @@
 const fs = require('fs');
 const data = fs
     .readFileSync('./input', 'utf8')
-    .split(/\n\n/)
-    .map(pair=>pair.split(/\n/).map(arr=>JSON.parse(arr)))
+    .split(/\n/)
+    .filter(line=>line!='')
+    .map(packet=>JSON.parse(packet))
+
 
 function compare(leftArr, rightArr) {
   if(Array.isArray(leftArr) && Array.isArray(rightArr)){
+
     if(leftArr.length == 0 && rightArr.length > 0) {
       return true
     }
@@ -44,10 +47,15 @@ function compare(leftArr, rightArr) {
   }
 }
 
-let result = data.map((pair,i)=> compare(pair[0],pair[1])),
-    indicies = [], 
-    i = -1
+data.push([[2]])
+data.push([[6]])
 
-while((i = result.indexOf(true,i+1)) != -1) indicies.push(i+1)
+let sorted = data.slice().sort((a,b)=>{
+  if(compare(a,b)) return -1
+  else return 1
+}).map(p=>JSON.stringify(p))
 
-console.log(indicies.reduce((sum,x)=>sum+x,0))
+let i = sorted.indexOf(JSON.stringify(data[data.length-1]))
+let j = sorted.indexOf(JSON.stringify(data[data.length-2]))
+console.log((i+1)*(j+1))
+
