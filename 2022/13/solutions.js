@@ -1,8 +1,6 @@
 const fs = require('fs');
 const data = fs
     .readFileSync('./input', 'utf8')
-    
-
 
 function compare(leftArr, rightArr) {
   if(Array.isArray(leftArr) && Array.isArray(rightArr)){
@@ -60,4 +58,3 @@ let sorted = data2.slice().sort((a,b)=>{
 i = sorted.indexOf(JSON.stringify(data2[data2.length-1]))
 j = sorted.indexOf(JSON.stringify(data2[data2.length-2]))
 console.log((i+1)*(j+1))
-
