@@ -54,7 +54,7 @@ function print() {
   
   flipped.forEach((line,x) => {
     process.stdout.write("\n")
-    line.slice(minx).forEach((unit, y)=>process.stdout.write(unit))
+    line.forEach((unit, y)=>process.stdout.write(unit))
   })
   process.stdout.write("\n")
 }
@@ -89,4 +89,5 @@ data.forEach(line=>{
 })
 
 let res = dropSand()
+print()
 console.log(res)
