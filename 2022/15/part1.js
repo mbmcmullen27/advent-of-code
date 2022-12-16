@@ -15,7 +15,6 @@ data.forEach(([s,b])=>{
   if (checkLine <= s[1] + distance && checkLine >= s[1] - distance) {
     let dy = Math.abs(checkLine - s[1])
     let dx = Math.abs(distance - dy)
-    console.log(`${dx} ${dy}`)
     emptyCoords.push([s[0]+dx, s[0]-dx])
   }
 })
@@ -32,16 +31,18 @@ emptyCoords.forEach((range,i,arr)=>{
   })
 })
 
-console.log(emptyCoords.sort((a,b)=>a[1] - b[1]))
+emptyCoords.sort((a,b)=>a[2] - b[1])
 
-console.log(emptyCoords.forEach((range,i,arr)=>{
+emptyCoords.forEach((range,i,arr)=>{
   let next = arr[i+1]
   if(next !== undefined && range[0] >= next[1]) arr[i][0] = next[1] - 1
-}))
+})
 
-let diff = emptyCoords.map((range)=>range[0]-range[1]+1)
-let sum = diff.reduce((sum,x)=>x+sum)
-let beacons = [... new Set(data.map(([,beacon])=> String(beacon)))].map(x=>JSON.parse(`[${x}]`))
+let diff = emptyCoords.map((range)=>range[0]-range[1]+1),
+    sum = diff.reduce((sum,x)=>x+sum),
+    beacons = [... new Set(data.map(([,beacon])=> String(beacon)))]
+              .map(x=>JSON.parse(`[${x}]`))
+
 beacons = beacons.filter(([,y])=>y==checkLine)
 beacons.forEach(b=>emptyCoords.forEach(([x1,x2])=>{
   if(b[0] >= x2 && b[0]<= x1) {
