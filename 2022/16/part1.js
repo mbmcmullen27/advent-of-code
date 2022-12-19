@@ -45,5 +45,3 @@ function dfs(node,prev, timeleft, pressure, open) {
 }
 
 console.log(dfs(graph['AA'], null, 30, 0, []))
-
-// 1881 high
