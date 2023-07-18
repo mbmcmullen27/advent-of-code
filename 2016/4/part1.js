@@ -9,7 +9,7 @@ Array.prototype.frequency = function() {
   return res
 }
 
-const data = fs.readFileSync('sample-input', 'utf-8')
+const data = fs.readFileSync('input', 'utf-8')
   .split('\n')
   .map(line=>{
     let ret = {
@@ -38,4 +38,5 @@ const data = fs.readFileSync('sample-input', 'utf-8')
 let real = data.filter(
   e => e.frequency.slice(0,5).map(x=>x.value).join("") == e.checksum
 )
-console.log(real)
+
+console.log(real.reduce((acc, e)=>e.sectorId+acc, 0))
