@@ -4,14 +4,23 @@
 
 int main(void) {
   FILE *in;
+  in = fopen("input", "r");
 
-  do {
-    char str1[10];
-    int delta;
+  char str1[10];
+  int location[2] = {0,0};
+  int dir[4][2] = {
+    {0,1},
+    {1,0},
+    {0,-1},
+    {-1,0}
+  };
+  char *card;
+  int delta;
+  
+  while(fgets(str1, 10, in)) {
+    sscanf(str1, "%c%d,", card, &delta);
+    printf("Turn %c and proceed %d\n", *card, delta);
+  } 
 
-    in = fopen("input", "r");
-    int n = fscanf(in, "%1s%d,%*[ ]%99[^\n]", str1, &delta);
-    printf("turn %s and move %d\n", str1, delta);
-    if (n == EOF) break;
-  } while(1);
+  fclose(in);
 }
