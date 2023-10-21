@@ -23,7 +23,6 @@ int main(void) {
     puts("------------------------------------");
     printf("Turn %c and proceed %d\n", card, delta);
     printf("    location: %d,%d\n",location[0],location[1]);
-    // puts(`   NEXT MOVE ${e}`)
     switch (card) {
       case 'R':
         puts("    TURNS RIGHT");
@@ -37,7 +36,11 @@ int main(void) {
         break;
     }
     printf("    delta: %d\n", delta);
+    location[0] += (dir[heading][0] * delta);
+    location[1] += (dir[heading][1] * delta);
   } 
 
+
+  printf("FINAL LOCATION: %d,%d\n",location[0],location[1]);
   fclose(in);
 }
