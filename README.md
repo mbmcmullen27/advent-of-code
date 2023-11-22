@@ -1,6 +1,11 @@
-# Advent of Code 2021
+# Advent of Code
 
-[adventofcode.com](https://adventofcode.com/2021)
+[adventofcode.com](https://adventofcode.com/)
+
+### Notable solutions
+    - Dijkstra's shortest path
+        - [2021](./2021/15/solutions.js)
+        - [2022](./2022/12/solutions.js)
 
 ### message from page source 
     
