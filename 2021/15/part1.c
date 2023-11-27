@@ -6,15 +6,17 @@
 
 typedef struct {
     int weight;
-    int** adjacent;
     int pos[2];
 } Vertex;
 
 typedef struct {
-    Vertex* nodes;
-    int head;
-    int tail;
-    int length;
+    Vertex *data;
+    Vertex *next;
+} QueueElement;
+
+typedef struct {
+    QueueElement head;
+    QueueElement tail;
 } Queue;
 
 const int directions[4][2] = {
@@ -25,20 +27,16 @@ const int directions[4][2] = {
 };
 
 void pushQueue(Queue *queue, Vertex* node) {
-    if(queue->tail == queue->length) {
-        puts("shifting queue...");
-        memcpy(&queue->nodes[queue->head], &queue->nodes[0], queue->tail-queue->head);
-        queue->head=0;
-        queue->tail-=(queue->tail-queue->head);
-    }
-
-    queue->nodes[queue->tail]=*node;
-    queue->tail++;
+    QueueElement next;
+    next.data = node;
+    next.next = NULL;
+    queue->tail->next = next;
+    queue->tail = next;
 }
 
 Vertex* popQueue(Queue *queue) {
-    Vertex *ret = &queue->nodes[queue->head];
-    queue->head++;
+    Vertex *ret = &queue->head->data;
+    queue->head=queue->head->next;
     return ret;
 }
 
@@ -66,12 +64,11 @@ Vertex** buildGraph(FILE *input, Data *stats) {
 }
 
 int search(Vertex** graph, Data *stats) {
-    Queue *queue = (Queue *)malloc(sizeof(Queue));
-    queue->nodes = (Vertex *)malloc(sizeof(Vertex)*stats->lines*stats->longest);
-    queue->head=0;
-    queue->tail=1;
-    queue->length=stats->longest;
-    pushQueue(queue, &graph[0][0]);
+    Queue queue;
+    QueueElement head;
+    head->data = &graph[0][0];
+    head->next = NULL;
+    queue.head = head;
 
     int distance[stats->lines][stats->longest];
     for(int i=0; i<stats->lines; i++)
@@ -80,8 +77,8 @@ int search(Vertex** graph, Data *stats) {
 
     distance[0][0]=0;
     Vertex current;
-    while(queue->head != queue->tail) {
-        current = *popQueue(queue);
+    while(queue.head != queue.tail) {
+        current = *popQueue(&queue);
         printf("processing node[%d][%d]...\n", current.pos[0], current.pos[1]);
         for(int i=0; i<4; i++) {
             int pos[2];
