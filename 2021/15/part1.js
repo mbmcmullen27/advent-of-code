@@ -37,4 +37,5 @@ function search(){
     return dist[length-1][width-1]
 }
 
+// console.log(graph)
 console.log(search())

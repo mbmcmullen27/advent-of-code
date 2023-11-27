@@ -15,11 +15,13 @@ Data* countlines(FILE *file) {
     int ch = 0;
 
     while ((ch = fgetc(file)) != EOF) {
-        current++;
         if (ch == '\n') {
             ret->lines++;
-            ret->longest = current > ret->longest ? current : ret->longest;
+            ret->longest = current > ret->longest ? 
+                current : ret->longest;
             current = 0;
+        } else {
+            current++;
         }
     }
     rewind(file);
