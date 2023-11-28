@@ -28,7 +28,7 @@ Data* countlines(FILE *file) {
     return ret;
 }
 
-int test() {
+void test() {
     FILE *fp = fopen("test", "r");
     Data *stats = countlines(fp);
     fclose(fp);
