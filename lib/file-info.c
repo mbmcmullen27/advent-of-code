@@ -1,10 +1,4 @@
-#include<stdio.h>
-#include<stdlib.h>
-
-typedef struct {
-    int lines;
-    int longest;
-} Data;
+#include "./header.h";
 
 Data* countlines(FILE *file) {
     Data *ret = malloc(sizeof(Data));

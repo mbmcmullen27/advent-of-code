@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include "../../file-info.c"
+#include "../../lib/file-info.c"
 
 int main() {
   FILE *input;

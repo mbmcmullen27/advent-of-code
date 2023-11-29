@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include <limits.h>
 #include <string.h>
-#include "../../file-info.c"
+#include "../../lib/file-info.c"
 
 typedef struct {
     int weight;
