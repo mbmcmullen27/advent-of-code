@@ -6,7 +6,6 @@ const data = fs
     .readFileSync('./input', 'utf8')
     .split(/\n/)
 
-
 function part1() {
   return data.map(line=> {
     let first, last
