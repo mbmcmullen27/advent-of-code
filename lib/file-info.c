@@ -1,4 +1,4 @@
-#include "./header.h";
+#include "./header.h"
 
 Data* countlines(FILE *file) {
     Data *ret = malloc(sizeof(Data));
