@@ -3,9 +3,9 @@
 [adventofcode.com](https://adventofcode.com/)
 
 ### Notable solutions
-    - Dijkstra's shortest path
-        - [2021](./2021/15/solutions.js)
-        - [2022](./2022/12/solutions.js)
+- Dijkstra's shortest path
+    - [2021](2021/15/solutions.js)
+    - [2022](2022/12/solutions.js)
 
 ### message from page source 
     
