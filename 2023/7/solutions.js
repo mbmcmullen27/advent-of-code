@@ -60,11 +60,11 @@ function part1() {
       onePair = (hand) => hand.pairs == 1
     ], test
   
-        for(type of types) {
-          test = checkHands(type, a, b)     
-          if(test != 0) return test
-        }
-    
+    for(type of types) {
+      test = checkHands(type, a, b)     
+      if(test != 0) return test
+    }
+
     return secondOrdering(a,b)
   })
   .map((hand, i) => hand.bid * (i+1))
