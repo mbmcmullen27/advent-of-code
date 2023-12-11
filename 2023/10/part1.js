@@ -1,6 +1,6 @@
 const fs = require('fs');
 const data = fs
-    .readFileSync('./sampleInput', 'utf8')
+    .readFileSync('./input', 'utf8')
     .split(/\n/)
     .map((line,i)=>line.split('').map((node,j)=>{
       return {
@@ -40,37 +40,34 @@ let path = [],
         if(neighbor.value.match(/[-7J]/)) {
           path[0] = e
           return neighbor
-        }
-        break;
+        } else return acc
       case('left'):
         if(neighbor.value.match(/[-FL]/)) {
           path[0] = e
           return neighbor
-        }
-        break;
+        } else return acc
       case('up'):
         if(neighbor.value.match(/[|F7]/)) {
           path[0] = e
           return neighbor
-        }
-        break;
+        } else return acc
       case('down'):
         if(neighbor.value.match(/[|LJ]/)) {
           path[0] = e
           return neighbor
-        }
-        break;
+        } else return acc
       default: return acc
     }
 },null)
 
+console.log(start)
 console.log(cursor)
 console.log(path)
 
 function traverse(cursor, path) {
-  console.log(`cursor: ${cursor.pos.x} ${cursor.pos.y}`)
-  if(cursor.value == 'S') return path.length
+  console.log(`\ncursor: ${cursor.pos.x} ${cursor.pos.y}`)
   console.log(`path: ${path}`)
+  console.log(`${path.length}`)
   switch(path[path.length -1]) {
     case('right'): delete cursor.adjacent.left; break;
     case('left'): delete cursor.adjacent.right; break;
@@ -82,11 +79,12 @@ function traverse(cursor, path) {
     let {x,y} = cursor.adjacent[dir],
       neighbor = data[y][x],
       log = ()=> {
-        console.log(`\ndirection: ${dir}`) 
+        console.log(`direction: ${dir}`) 
         console.log(`location: ${x},${y}`)
         console.log(`value: ${neighbor.value}`)
       }
     if(neighbor){
+      if(neighbor.value == 'S') return path.length+1
       switch(dir) {
         case('right'):
           if(neighbor.value.match(/[-7J]/)) {
@@ -116,10 +114,9 @@ function traverse(cursor, path) {
             return traverse(neighbor, path)
           }
           break;
-        default: return path
       }
     }
   }
 }
 
-console.log(traverse(cursor, path))
+console.log(traverse(cursor,path))
