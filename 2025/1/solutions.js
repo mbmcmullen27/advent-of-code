@@ -65,7 +65,6 @@ function part2() {
         position -= delta
         if(position == 0) {
           count++
-
         }
         return
       }
